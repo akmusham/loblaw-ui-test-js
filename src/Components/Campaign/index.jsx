@@ -1,13 +1,30 @@
 import React, { useEffect, useState } from "react";
-import "./index.css";
+import "../index.css";
 import Campaign from "./campaign";
-import CampaignDashboard from "./campaignDashboard";
+import CampaignDashboard from "../CampaignDashboard/";
 
 function Campaigns({ campaigns }) {
   const [SelectedCampaign, setCampaign] = useState(null);
 
   const handleOnCampaign = (id) => {
     setCampaign(campaigns[id]);
+  };
+
+  const CampaignList = () => {
+    return (
+      <>
+        <h2>CAMPAIGNS</h2>
+        {campaigns.map((each, index) => {
+          return (
+            <Campaign
+              key={index}
+              campaign={each}
+              handleOnCampaign={handleOnCampaign}
+            />
+          );
+        })}
+      </>
+    );
   };
 
   return (
@@ -18,18 +35,7 @@ function Campaigns({ campaigns }) {
           setCampaign={setCampaign}
         />
       ) : (
-        <>
-          <h2>CAMPAIGNS</h2>
-          {campaigns.map((each, index) => {
-            return (
-              <Campaign
-                key={index}
-                campaign={each}
-                handleOnCampaign={handleOnCampaign}
-              />
-            );
-          })}
-        </>
+        <CampaignList />
       )}
     </div>
   );

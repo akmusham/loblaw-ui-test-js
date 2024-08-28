@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Campaigns from './Components/campaigns'
+import Campaigns from './Components/Campaign/'
 
 function App() {
   const [campaigns, setCampaigns] = useState(null);

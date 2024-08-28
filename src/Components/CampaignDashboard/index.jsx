@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./index.css";
+import "../index.css";
+import ThumbNailCard from "../common/thumbNailCard";
+import { getCTR, getTotal } from '../utility/';
 
 function CampaignDashboard({ SelectedCampaign, setCampaign }) {
   const [campaignDetails, setCampaignDetails] = useState([]);
@@ -26,22 +28,6 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
       });
   };
 
-  const getCTR = (clicks, impressions) => {
-    return (clicks / impressions) * 100;
-  };
-
-  const getTotal = (campaignDetails) => {
-    return {
-      impressions: campaignDetails.reduce(
-        (acc, cur) => acc + cur.impressions,
-        0
-      ),
-      clicks: campaignDetails.reduce((acc, cur) => acc + cur.clicks, 0),
-      users: campaignDetails.reduce((acc, cur) => acc + cur.users, 0),
-      ctr: campaignDetails.reduce((acc, cur) => acc + cur.ctr, 0).toFixed(),
-    };
-  };
-
   const RenderThumbNails = () => {
     let data = getTotal(campaignDetails);
     return (
@@ -49,14 +35,14 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
         {data
           ? Object.keys(data).map((each, i) => {
               return (
-                <div key={i} className="dashboard-thumbnail-card">
+                <ThumbNailCard key={i}>
                   <div>
                     <h3>{data[each]}</h3>
                   </div>
                   <span>
                     <h4 className="dashboard-thumbnail-desc">{each}</h4>
                   </span>
-                </div>
+                </ThumbNailCard>
               );
             })
           : null}
@@ -64,19 +50,10 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
     );
   };
 
-  return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
-        <button
-          className="back-button"
-          onClick={() => setCampaign(null)}
-        >{`<`}</button>
-        <h2>{SelectedCampaign.name}</h2>
-      </div>
-      {campaignDetails.length > 0 ? (
-        <RenderThumbNails campaignDetails={campaignDetails} />
-      ) : null}
-      <div className="table-container">
+  const CampaignIterationsTable = () => {
+    return (
+      <>
+        <h4>Most Recent on Top</h4>
         <table>
           <thead>
             <tr>
@@ -101,6 +78,32 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
             })}
           </tbody>
         </table>
+      </>
+    );
+  };
+
+  const Header = () => {
+    return (
+      <>
+        <button
+          className="back-button"
+          onClick={() => setCampaign(null)}
+        >{`<`}</button>
+        <h2>{SelectedCampaign.name}</h2>
+      </>
+    );
+  };
+
+  return (
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <Header />
+      </div>
+      {campaignDetails.length > 0 ? (
+        <RenderThumbNails campaignDetails={campaignDetails} />
+      ) : null}
+      <div className="table-container">
+        <CampaignIterationsTable />
       </div>
     </div>
   );
