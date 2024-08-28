@@ -1,11 +1,21 @@
 .campaign-container {
-    margin: 5%;
-    width: 50%;
+  margin: 5%;
+  width: 80%;
+  background: #fcfcfc;
+  padding: 5%;
 }
 .campaign-wrapper {
-    padding: 3%;
-    cursor: pointer;
+  padding: 3%;
+  cursor: pointer;
+  position: relative;
+  height: 100px;
+  background: #fff;
+  margin: 20px 40px;
+  transition: 0.4s all;
+}
+.campaign-wrapper:hover {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.13);
 }
 .campaign-name {
-    margin-left: 3%;
+  margin-left: 3%;
 }
