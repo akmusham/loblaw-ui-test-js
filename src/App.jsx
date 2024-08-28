@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import Campaigns from './Components/campaigns'
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [campaigns, setCampaigns] = useState(null);
 
   const fetchCampaigns = () => {
     fetch('/api/campaigns')
     .then((response) => response.json())
-    .then((data) => setUser(data));
+    .then((data) => setCampaigns(data));
   }
 
   useEffect(() => {
     fetchCampaigns()
   }, []);
-
   return <div>
-    { JSON.stringify(user) }
+    {campaigns? <Campaigns campaigns={campaigns} />: null}
   </div>;
 }
 
