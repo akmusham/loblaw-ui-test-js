@@ -20,19 +20,22 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
       .then((response) => response.json())
       .then((data) => {
         let newCampaignDetails = [...campaignDetails];
-        data.ctr = getCTR(data.clicks, data.impressions)
-        newCampaignDetails.push(data);
+        data.ctr = getCTR(data.clicks, data.impressions);
+        newCampaignDetails.unshift(data);
         setCampaignDetails(newCampaignDetails);
       });
   };
 
-  const getCTR = (clicks, impressions) => {    
+  const getCTR = (clicks, impressions) => {
     return (clicks / impressions) * 100;
   };
 
   const getTotal = (campaignDetails) => {
     return {
-      impressions: campaignDetails.reduce((acc, cur) => acc + cur.impressions, 0),
+      impressions: campaignDetails.reduce(
+        (acc, cur) => acc + cur.impressions,
+        0
+      ),
       clicks: campaignDetails.reduce((acc, cur) => acc + cur.clicks, 0),
       users: campaignDetails.reduce((acc, cur) => acc + cur.users, 0),
       ctr: campaignDetails.reduce((acc, cur) => acc + cur.ctr, 0).toFixed(),
@@ -61,8 +64,6 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
     );
   };
 
-  console.log(campaignDetails, "campaignDetailscampaignDetails");
-
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
@@ -77,13 +78,15 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
       ) : null}
       <div className="table-container">
         <table>
-          <tr>
-            <th>No</th>
-            <th>Impressions</th>
-            <th>Clicks</th>
-            <th>Users</th>
-            <th>CTR</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Impressions</th>
+              <th>Clicks</th>
+              <th>Users</th>
+              <th>CTR</th>
+            </tr>
+          </thead>
           <tbody>
             {campaignDetails.map((each, i) => {
               return (
