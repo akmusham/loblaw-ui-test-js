@@ -2,40 +2,53 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 
 function CampaignDashboard({ SelectedCampaign, setCampaign }) {
-  const [campaignDetails, setCampaignDetails] = useState(null);
+  const [campaignDetails, setCampaignDetails] = useState([]);
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     setInterval(() => {
-      // updateCounter()
       setCounter((prev) => prev + 1);
     }, 5000);
   }, [SelectedCampaign]);
 
   useEffect(() => {
     fetchCampaignDetails();
-    console.log("huh??", counter);
   }, [counter]);
 
   const fetchCampaignDetails = () => {
     fetch(`/api/campaigns/${SelectedCampaign.id}?number=${counter}`)
       .then((response) => response.json())
-      .then((data) => setCampaignDetails(data));
+      .then((data) => {
+        let newCampaignDetails = [...campaignDetails];
+        data.ctr = getCTR(data.clicks, data.impressions)
+        newCampaignDetails.push(data);
+        setCampaignDetails(newCampaignDetails);
+      });
   };
 
-  // const updateCounter = () => {
-  //   setCounter((prev) => prev + 1);
-  // }
+  const getCTR = (clicks, impressions) => {    
+    return (clicks / impressions) * 100;
+  };
 
-  const RenderThumbNails = ({campaignDetails}) => {
+  const getTotal = (campaignDetails) => {
+    return {
+      impressions: campaignDetails.reduce((acc, cur) => acc + cur.impressions, 0),
+      clicks: campaignDetails.reduce((acc, cur) => acc + cur.clicks, 0),
+      users: campaignDetails.reduce((acc, cur) => acc + cur.users, 0),
+      ctr: campaignDetails.reduce((acc, cur) => acc + cur.ctr, 0).toFixed(),
+    };
+  };
+
+  const RenderThumbNails = () => {
+    let data = getTotal(campaignDetails);
     return (
       <div className="dashboard-thumbnail-container">
-        {campaignDetails
-          ? Object.keys(campaignDetails).map((each, i) => {
+        {data
+          ? Object.keys(data).map((each, i) => {
               return (
                 <div key={i} className="dashboard-thumbnail-card">
                   <div>
-                    <h3>{campaignDetails[each]}</h3>
+                    <h3>{data[each]}</h3>
                   </div>
                   <span>
                     <h4 className="dashboard-thumbnail-desc">{each}</h4>
@@ -45,8 +58,10 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
             })
           : null}
       </div>
-    )
-  }
+    );
+  };
+
+  console.log(campaignDetails, "campaignDetailscampaignDetails");
 
   return (
     <div className="dashboard-container">
@@ -57,14 +72,32 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
         >{`<`}</button>
         <h2>{SelectedCampaign.name}</h2>
       </div>
-      <RenderThumbNails campaignDetails={campaignDetails} />
-      <div className="graph-container">
-        <div className="graph-wrapper">
-          bar graph
-        </div>
-        <div className="graph-wrapper">
-          line graph
-        </div>
+      {campaignDetails.length > 0 ? (
+        <RenderThumbNails campaignDetails={campaignDetails} />
+      ) : null}
+      <div className="table-container">
+        <table>
+          <tr>
+            <th>No</th>
+            <th>Impressions</th>
+            <th>Clicks</th>
+            <th>Users</th>
+            <th>CTR</th>
+          </tr>
+          <tbody>
+            {campaignDetails.map((each, i) => {
+              return (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{each.impressions}</td>
+                  <td>{each.clicks}</td>
+                  <td>{each.users}</td>
+                  <td>{getCTR(each.clicks, each.impressions).toFixed()}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
