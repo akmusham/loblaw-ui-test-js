@@ -27,20 +27,13 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
   //   setCounter((prev) => prev + 1);
   // }
 
-  return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
-        <button
-          className="back-button"
-          onClick={() => setCampaign(null)}
-        >{`<`}</button>
-        <h2>{SelectedCampaign.name}</h2>
-      </div>
+  const RenderThumbNails = ({campaignDetails}) => {
+    return (
       <div className="dashboard-thumbnail-container">
         {campaignDetails
           ? Object.keys(campaignDetails).map((each, i) => {
               return (
-                <div className="dashboard-thumbnail-card">
+                <div key={i} className="dashboard-thumbnail-card">
                   <div>
                     <h3>{campaignDetails[each]}</h3>
                   </div>
@@ -51,6 +44,27 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
               );
             })
           : null}
+      </div>
+    )
+  }
+
+  return (
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <button
+          className="back-button"
+          onClick={() => setCampaign(null)}
+        >{`<`}</button>
+        <h2>{SelectedCampaign.name}</h2>
+      </div>
+      <RenderThumbNails campaignDetails={campaignDetails} />
+      <div className="graph-container">
+        <div className="graph-wrapper">
+          bar graph
+        </div>
+        <div className="graph-wrapper">
+          line graph
+        </div>
       </div>
     </div>
   );

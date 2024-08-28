@@ -2,7 +2,7 @@
   margin: 5% 5%;
   width: 80%;
   background: #fcfcfc;
-  padding: 2% 5%;
+  padding: 2% 3%;
 }
 .campaign-wrapper {
   padding: 3%;
@@ -10,7 +10,7 @@
   position: relative;
   height: 100px;
   background: #fff;
-  margin: 20px 40px;
+  margin: 20px 0px;
   transition: 0.4s all;
 }
 .campaign-wrapper:hover {
@@ -43,7 +43,7 @@
   padding: 2%;
   border-radius: 4px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.13);
-  width: 100px;
+  width: 200px;
 
 }
 .dashboard-thumbnail-desc {
@@ -61,4 +61,17 @@
 .dashboard-header {
   display: flex;
   align-items: baseline;
+}
+.graph-wrapper {
+  margin: 2% 3%;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.13);
+  width: 100%;
+  height: 100%;
+}
+.graph-container {
+  display: flex;
+  justify-content: space-between;
 }
