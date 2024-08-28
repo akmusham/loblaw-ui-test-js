@@ -7,12 +7,13 @@ function Campaign({ campaign, handleOnCampaign }) {
       className="campaign-wrapper"
       onClick={() => handleOnCampaign(campaign.id)}
     >
-      <span>{campaign.id + 1}</span>
-      <span className="campaign-name">{campaign.name}</span>
-      <span className="campaign-name">
-        {new Date(campaign.date).toDateString()}
+      <span className="campaign-header">
+        <span className="campaign-name">{campaign.name}</span>
+        <span className="campaign-date">
+          {new Date(campaign.date).toDateString()}
+        </span>
       </span>
-      <span className="campaign-name">{campaign.description}</span>
+      <div className="campaign-description">{campaign.description}</div>
     </div>
   );
 }

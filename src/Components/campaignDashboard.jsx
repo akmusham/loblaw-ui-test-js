@@ -14,7 +14,7 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
 
   useEffect(() => {
     fetchCampaignDetails();
-    console.log('huh??', counter);
+    console.log("huh??", counter);
   }, [counter]);
 
   const fetchCampaignDetails = () => {
@@ -28,15 +28,22 @@ function CampaignDashboard({ SelectedCampaign, setCampaign }) {
   // }
 
   return (
-    <div className="campaign-container">
+    <div className="dashboard-container">
+      <button onClick={() => setCampaign(null)}>{`< back`}</button>
       <div>
-        <button onClick={() => setCampaign(null)}>{`< back`}</button>
-        SelectedCampaign
-        <br />
-        <br />
-        <br />
-        {SelectedCampaign.name}
-        {JSON.stringify(campaignDetails)}
+        <h2>{SelectedCampaign.name}</h2>
+        <div className="dashboard-thumbnail-container">
+          {campaignDetails
+            ? Object.keys(campaignDetails).map((each, i) => {
+                return (
+                  <div className="dashboard-thumbnail-card">
+                    <div><h3>{campaignDetails[each]}</h3></div>
+                    <span><h4 className="dashboard-thumbnail-desc">{each}</h4></span>
+                  </div>
+                );
+              })
+            : null}
+        </div>
       </div>
     </div>
   );
