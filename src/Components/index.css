@@ -49,3 +49,16 @@
 .dashboard-thumbnail-desc {
   color: rgb(124 120 120);
 }
+.back-button{
+  margin: 0;
+  border: none;
+  background-color: unset;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #0000EE;
+}
+.dashboard-header {
+  display: flex;
+  align-items: baseline;
+}

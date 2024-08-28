@@ -12,27 +12,25 @@ function Campaigns({ campaigns }) {
 
   return (
     <div className="campaign-container">
-      <>
-      <h2>CAMPAIGNS</h2>
-      {
-      SelectedCampaign ? (
+      {SelectedCampaign ? (
         <CampaignDashboard
           SelectedCampaign={SelectedCampaign}
           setCampaign={setCampaign}
         />
       ) : (
-        campaigns.map((each, index) => {
-          return (
-            <Campaign
-              key={index}
-              campaign={each}
-              handleOnCampaign={handleOnCampaign}
-            />
-          );
-        })
-      )
-      }
-      </>
+        <>
+          <h2>CAMPAIGNS</h2>
+          {campaigns.map((each, index) => {
+            return (
+              <Campaign
+                key={index}
+                campaign={each}
+                handleOnCampaign={handleOnCampaign}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }
