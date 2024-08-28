@@ -1,0 +1,11 @@
+.campaign-container {
+    margin: 5%;
+    width: 50%;
+}
+.campaign-wrapper {
+    padding: 3%;
+    cursor: pointer;
+}
+.campaign-name {
+    margin-left: 3%;
+}
